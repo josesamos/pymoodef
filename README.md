@@ -30,8 +30,8 @@ contributing to this project, you agree to abide by its terms.
 
 ## License
 
-`pymoodef` was created by Universidad de Granada. It is licensed under
-the terms of the MIT license.
+`pymoodef` was created by Jose Samos. It is licensed under the terms of
+the MIT license.
 
 ## Credits
 
