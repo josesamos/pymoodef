@@ -7,7 +7,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u"pymoodef"
-copyright = u"2024, Jose Samos"
+copyright = u"2024, Universidad de Granada"
 author = u"Jose Samos"
 
 # -- General configuration ---------------------------------------------------
