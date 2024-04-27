@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pymoodef"
 version = "0.1.0"
-description = "A package for doing great things!"
+description = "Quiz generation for Moodle."
 authors = ["Jose Samos"]
 license = "MIT"
 readme = "README.md"
