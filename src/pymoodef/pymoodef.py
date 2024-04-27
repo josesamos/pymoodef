@@ -1,6 +1,8 @@
-from pandas import read_csv, read_excel
+from pandas import read_csv, read_excel, isna
 from warnings import catch_warnings, simplefilter
 from configparser import ConfigParser
+from PIL import Image
+from base64 import b64encode
 
 
 class Questions:
@@ -112,3 +114,59 @@ class Questions:
         with catch_warnings():
             simplefilter("ignore") 
             self.questions = read_excel(file, sheet_index)
+
+    def generate_xml(self, file):
+        """Generate quiz in XML file.
+    
+        Each question is in a row. Each concept in a column.
+    
+        Parameters
+        ----------
+        file : str
+            Path to csv file.
+
+        Returns
+        -------
+        None
+    
+        Examples
+        --------
+        >>> q = Questions()
+        >>> q.define_from_csv('tests/questions0.csv')
+        >>> q.generate_xml('questions.xml')
+
+        """
+        questions = self.__format_questions()
+        with open(file, "w") as text_file:
+            text_file.write(f"""<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category> <text>$course$/top/{self.category}</text> </category>
+    <info format="html"> <text></text> </info>
+    <idnumber></idnumber>
+  </question>
+  {questions}
+</quiz>""")
+
+    def __format_questions(self):
+        res = ''
+        for index, row in self.questions.iterrows():
+            if isna(row['image']):
+                img = ''
+                fimg = ''
+            else:
+                image = Image.open(row['image'])
+                if self.adapt_images:
+                    image.thumbnail((self.width, self.height))
+                width, height = image.size
+                img = "row['image']"
+                fimg = "row['image_alt']"
+            res = res + f"""<questiontext format="html">
+      <text><![CDATA[
+         <!-- {self.copyright} -->
+         <!-- {self.license} -->
+         <p>{row['question']}</p>{img}]]></text>
+         {fimg}
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback>"""
+        return res

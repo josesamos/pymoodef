@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+  <question type="category">
+    <category> <text>$course$/top/Initial test</text> </category>
+    <info format="html"> <text></text> </info>
+    <idnumber></idnumber>
+  </question>
+  <questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>What are the basic arithmetic operations?</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>Match each operation with its symbol.</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>The square root is a basic arithmetic operation.</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>What basic operation does it have as a "+" symbol?</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>The symbol for addition is [[1]], the symbol for subtraction is [[2]].</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>The symbol for addition is [[1]], the symbol for subtraction is [[2]].</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>Order the result from smallest to largest.</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>Order the result from smallest to largest.</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>What is the result of SQRT(4)?</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>What is the result of 4/3?</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback><questiontext format="html">
+      <text><![CDATA[
+         <!-- Copyright © 2024 Universidad de Granada -->
+         <!-- License Creative Commons Attribution-ShareAlike 4.0 -->
+         <p>Describe the addition operation.</p>]]></text>
+         
+    </questiontext>
+    <generalfeedback format="html"> <text></text> </generalfeedback>
+</quiz>
