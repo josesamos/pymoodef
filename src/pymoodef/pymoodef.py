@@ -18,8 +18,28 @@ class Questions:
         self.adapt_images = 'FALSE'
         self.width = '800'
         self.height = '600'
+        self.questions = None
 
     def define_ini(self, file):
+        """Define configuration values.
+    
+        These values are associated with each defined question.
+    
+        Parameters
+        ----------
+        file : str
+            Path to ini file.
+
+        Returns
+        -------
+        None
+    
+        Examples
+        --------
+        >>> q = Questions()
+        >>> q.define_ini('tests/question.ini')
+
+        """
         config = ConfigParser()
         config.read(file)
         if 'category' in config['DEFAULT']:
@@ -44,9 +64,51 @@ class Questions:
             self.height = config['DEFAULT']['height']
   
     def define_from_csv(self, file, sep = ','):
+        """Define questions from a csv file.
+    
+        Each question is in a row. Each concept in a column.
+    
+        Parameters
+        ----------
+        file : str
+            Path to csv file.
+        sep : str
+            Separator character, ',' or ';'.
+    
+        Returns
+        -------
+        None
+    
+        Examples
+        --------
+        >>> q = Questions()
+        >>> q.define_from_csv('tests/questions0.csv')
+
+        """
         self.questions = read_csv(file, sep = sep)
   
     def define_from_excel(self, file, sheet_index = 0):
+        """Define questions from an Excel file.
+    
+        Each question is in a row. Each concept in a column.
+    
+        Parameters
+        ----------
+        file : str
+            Path to Excel file.
+        sheet_index : int
+            Number of sheet to process.
+    
+        Returns
+        -------
+        None
+    
+        Examples
+        --------
+        >>> q = Questions()
+        >>> q.define_from_excel('tests/questions.xlsx')
+
+        """
         with catch_warnings():
             simplefilter("ignore") 
             self.questions = read_excel(file, sheet_index)
