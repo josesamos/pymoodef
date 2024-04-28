@@ -5,6 +5,8 @@ from PIL import Image
 from base64 import b64encode
 from pathlib import Path
 import tempfile, os
+from string import punctuation
+from pymoodef.common import string_to_vector
 
 
 class Questions:
@@ -150,7 +152,36 @@ class Questions:
   {questions}
 </quiz>""")
 
-    def __generate_questiontext(self, row):
+    def __format_questions(self):
+        columns = set(self.__questions.columns)
+        columns = columns.difference({'type', 'question', 'image', 'image_alt', 'answer'}) 
+        res = ''
+        for index, row in self.__questions.iterrows():
+            res = res + self.__generate_question(row, index, columns)
+        return res
+      
+
+    def __generate_question(self, row, index, columns):
+        questiontext = self.__generate_question_text(row)
+        rest = self.__get_rest_of_answers(row, columns)
+        n = len(rest)
+        answer = string_to_vector(row["answer"])
+        print(answer)
+        
+        name = self.__generate_name(row, index)
+        res = name  + questiontext 
+        return res
+
+
+    def __get_rest_of_answers(self, row, columns):
+        res = []
+        for col in columns:
+            if not isna(row[col]):
+                res.append(row[col])
+        return res
+
+
+    def __generate_question_text(self, row):
         if isna(row['image']):
             img = ''
             fimg = ''
@@ -177,11 +208,21 @@ class Questions:
     </questiontext>
     <generalfeedback format="html"> <text></text> </generalfeedback>"""
         return res
-      
 
-    def __format_questions(self):
-        res = ''
-        for index, row in self.__questions.iterrows():
-            questiontext = self.__generate_questiontext(row)
-            res = res + questiontext
+    def __generate_name(self, row, index):
+        num = int(self.__first_question_number) + index
+        type = row['type']
+        question = row['question'][:40]
+        for p in punctuation:
+            question = question.replace(p, "")
+        question = question.replace(" ", "_")
+        if isna(type):
+            name = "q%03d_%s" % (num, question)
+        else:
+            name = "q%03d_%s_%s" % (num, type, question)
+        name = name.lower()
+      
+        res = f'<name> <text>{name}</text> </name>'
         return res
+
+
