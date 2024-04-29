@@ -33,6 +33,7 @@ class Questions:
         self.__width = '800'
         self.__height = '600'
         self.__questions = None
+        self.__path = None
 
     def define_ini(self, file):
         """Define configuration values.
@@ -99,6 +100,7 @@ class Questions:
         >>> q.define_from_csv('tests/questions0.csv')
 
         """
+        self.__path =  "%s" % Path(file).parent
         self.__questions = read_csv(file, sep = sep)
   
     def define_from_excel(self, file, sheet_index = 0):
@@ -123,6 +125,7 @@ class Questions:
         >>> q.define_from_excel('tests/questions.xlsx')
 
         """
+        self.__path = "%s" % Path(file).parent
         with catch_warnings():
             simplefilter("ignore") 
             self.__questions = read_excel(file, sheet_index)
@@ -185,7 +188,7 @@ class Questions:
             file = Path(row['image']).name
             filename, file_extension = os.path.splitext(file)
             image_alt = row['image_alt']
-            image = Image.open(row['image'])
+            image = Image.open(self.__path + '/' + row['image'])
             if self.__adapt_images:
                 image.thumbnail((int(self.__width), int(self.__height)))
             width, height = image.size
