@@ -3,7 +3,7 @@ from pandas import isna
 
 def _string_to_vector(str):
     """Transforms string into a vector of strings."""
-    if isna(str):
+    if isna(str) or str == "":
         res = []
     else:
         res = str.split("<|>")
