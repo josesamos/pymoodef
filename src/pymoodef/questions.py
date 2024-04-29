@@ -6,8 +6,16 @@ from base64 import b64encode
 from pathlib import Path
 import tempfile, os
 from string import punctuation
-from pymoodef.common import string_to_vector
-
+from pymoodef.common import string_to_vector, is_numeric_answer, has_gaps
+from pymoodef.numerical import generate_numerical
+from pymoodef.shortanswer import generate_shortanswer
+from pymoodef.multichoice import generate_multichoice
+from pymoodef.ordering import generate_ordering
+from pymoodef.ddwtos import generate_ddwtos
+from pymoodef.gapselect import generate_gapselect
+from pymoodef.matching import generate_matching
+from pymoodef.essay import generate_essay
+from pymoodef.truefalse import generate_truefalse
 
 class Questions:
     """Defines a set of questions to be included in the Moodle question bank."""
@@ -153,23 +161,11 @@ class Questions:
 </quiz>""")
 
     def __format_questions(self):
-        columns = set(self.__questions.columns)
-        columns = columns.difference({'type', 'question', 'image', 'image_alt', 'answer'}) 
+        columns = self.__questions.columns
+        columns = columns.difference(['type', 'question', 'image', 'image_alt', 'answer']) 
         res = ''
         for index, row in self.__questions.iterrows():
             res = res + self.__generate_question(row, index, columns)
-        return res
-      
-
-    def __generate_question(self, row, index, columns):
-        questiontext = self.__generate_question_text(row)
-        rest = self.__get_rest_of_answers(row, columns)
-        n = len(rest)
-        answer = string_to_vector(row["answer"])
-        print(answer)
-        
-        name = self.__generate_name(row, index)
-        res = name  + questiontext 
         return res
 
 
@@ -195,34 +191,93 @@ class Questions:
             width, height = image.size
             fd, path = tempfile.mkstemp(suffix=file_extension)
             image.save(path)
-            value = b64encode(open(path, 'rb').read())
+            with open(path, "rb") as image_file:
+                value = b64encode(image_file.read()).decode('ascii')
             img = f'<p><img src="@@PLUGINFILE@@/{file}" alt="{image_alt}" width="{width}" height="{height}" class="img-fluid atto_image_button_text-bottom"></p>'
             fimg = f'<file name="{file}" path="/" encoding="base64">{value}</file>'
             
-        res = f"""<questiontext format="html">
+        res = f"""
+    <questiontext format="html">
       <text><![CDATA[
          <!-- {self.__copyright} -->
          <!-- {self.__license} -->
          <p>{row['question']}</p>{img}]]></text>
          {fimg}
     </questiontext>
-    <generalfeedback format="html"> <text></text> </generalfeedback>"""
+    <generalfeedback format="html"> <text></text> </generalfeedback>
+"""
         return res
 
-    def __generate_name(self, row, index):
+    def __generate_name(self, row, index, type):
         num = int(self.__first_question_number) + index
-        type = row['type']
         question = row['question'][:40]
         for p in punctuation:
             question = question.replace(p, "")
         question = question.replace(" ", "_")
-        if isna(type):
-            name = "q%03d_%s" % (num, question)
-        else:
-            name = "q%03d_%s_%s" % (num, type, question)
+        name = "q%03d_%s_%s" % (num, type, question)
         name = name.lower()
       
-        res = f'<name> <text>{name}</text> </name>'
+        res = f"""
+      <name> <text>{name}</text> </name>
+"""
+        return res
+      
+
+    def __generate_question(self, row, index, columns):
+        questiontext = self.__generate_question_text(row)
+        rest = self.__get_rest_of_answers(row, columns)
+        answer = string_to_vector(row["answer"])
+        if is_numeric_answer(answer):
+            type = 'numerical'
+            question_type = '<question type="numerical">'
+            question_body = generate_numerical(answer, rest)
+        elif len(rest) > 0:
+            if len(answer) == 1:
+                if not has_gaps(row["question"]):
+                    if isna(row["type"]):
+                        type = 'multichoice'
+                        question_type = '<question type="multichoice">'
+                        question_body = generate_multichoice(answer, rest, self.__correct_feedback, self.__incorrect_feedback)
+                    else:
+                        if row["type"].lower() == 'h':
+                            orientation = 'h'
+                        else:
+                            orientation = 'v'
+                        type = 'ordering'
+                        question_type = '<question type="ordering">'
+                        question_body = generate_ordering(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback, orientation)
+                else:
+                    if isna(row["type"]):
+                        type = 'ddwtos'
+                        question_type = '<question type="ddwtos">'
+                        question_body = generate_ddwtos(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
+                    else:
+                        type = 'gapselect'
+                        question_type = '<question type="gapselect">'
+                        question_body = generate_gapselect(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
+            else:
+                type = 'matching'
+                question_type = '<question type="matching">'
+                question_body = generate_matching(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
+        else:
+            if len(answer) == 0:
+                type = 'essay'
+                question_type = '<question type="essay">'
+                question_body = generate_essay()
+            else:
+                if answer[0].lower() in ['true', 'false']:
+                    type = 'truefalse'
+                    question_type = '<question type="truefalse">'
+                    question_body = generate_truefalse(answer)
+                else:
+                    type = 'shortanswer'
+                    question_type = '<question type="shortanswer">'
+                    question_body = generate_shortanswer(answer)
+
+        name = self.__generate_name(row, index, type)
+        res = """
+""" + question_type + name  + questiontext + question_body + """
+</question>"""
         return res
 
 

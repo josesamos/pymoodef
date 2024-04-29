@@ -20,6 +20,18 @@ def is_numeric(str):
     return(is_dig)
 
 
-def numeric_answer(answer):
+def is_numeric_answer(answer):
     """Check if answer is numeric."""
-    return False
+    if (len(answer) == 1):
+        return(is_numeric(answer[0]))
+    elif (len(answer) == 2):
+        return(is_numeric(answer[0]) and is_numeric(answer[1]))
+    return(False)
+
+
+def has_gaps(str):
+    """Check if it has gaps."""
+    return(str.find('[[1]]') != -1 and str.find('[[2]]') != -1)
+
+
+  
