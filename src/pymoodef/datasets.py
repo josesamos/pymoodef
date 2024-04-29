@@ -24,6 +24,19 @@ def get_questions_csv():
     with resources.path("pymoodef.data", "questions.csv") as f:
         data_file_path = f
     return data_file_path
+
+
+def get_questions_csv2():
+    """Get path to example questions csv2 file.
+
+    Returns
+    -------
+    pathlib.PosixPath
+        Path to file.
+    """
+    with resources.path("pymoodef.data", "questions.csv2") as f:
+        data_file_path = f
+    return data_file_path
   
 
 def get_questions_ini():
