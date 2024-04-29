@@ -40,10 +40,12 @@ def moodef(file, ini = '', xml = ''):
         q.define_ini(ini)
     if file_extension.lower() == '.csv':
         q.define_from_csv(file)
+    if file_extension.lower() == '.csv2':
+        q.define_from_csv(file[:-1], sep = ';')
     elif file_extension.lower() == '.xlsx':
         q.define_from_excel(file)
     else:
-        raise Exception('File type not supported (only csv and xlsx are valid).')
+        raise Exception('File type not supported (only csv, csv2 and xlsx are valid).')
     if xml == '':
         path_xml = filename + '.xml'
         q.generate_xml(path_xml)
