@@ -26,14 +26,14 @@ def get_questions_csv():
     return data_file_path
   
 
-def get_question_ini():
-    """Get path to example question ini file.
+def get_questions_ini():
+    """Get path to example questions ini file.
 
     Returns
     -------
     pathlib.PosixPath
         Path to file.
     """
-    with resources.path("pymoodef.data", "question.ini") as f:
+    with resources.path("pymoodef.data", "questions.ini") as f:
         data_file_path = f
     return data_file_path
