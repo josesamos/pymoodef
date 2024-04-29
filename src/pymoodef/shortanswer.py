@@ -1,5 +1,4 @@
-
-def generate_shortanswer(answer):
+def _generate_shortanswer(answer):
   res = f"""
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>

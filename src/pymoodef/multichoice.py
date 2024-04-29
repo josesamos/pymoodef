@@ -1,5 +1,4 @@
-
-def generate_multichoice(answer, rest, correct_feedback, incorrect_feedback):
+def _generate_multichoice(answer, rest, correct_feedback, incorrect_feedback):
     question = f"""
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.5</penalty>

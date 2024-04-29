@@ -1,4 +1,4 @@
-def generate_essay():
+def _generate_essay():
     res = """
     <defaultgrade>1</defaultgrade>
     <penalty>0</penalty>

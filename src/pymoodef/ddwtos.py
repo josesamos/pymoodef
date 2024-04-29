@@ -1,5 +1,4 @@
-
-def generate_ddwtos(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback):
+def _generate_ddwtos(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback):
     question = f"""
     <defaultgrade>1</defaultgrade>
     <penalty>0.3333333</penalty>

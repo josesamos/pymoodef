@@ -1,6 +1,6 @@
-from pymoodef.common import string_to_vector
+from pymoodef.common import _string_to_vector
 
-def generate_matching(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback):
+def _generate_matching(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback):
     
     question = f"""
     <defaultgrade>1.0000000</defaultgrade>
@@ -27,7 +27,7 @@ def generate_matching(answer, rest, correct_feedback, partially_correct_feedback
 """
     others = ''
     for r in rest:
-        rv = string_to_vector(r)
+        rv = _string_to_vector(r)
         others = others + f"""
     <subquestion format="html">
       <text><![CDATA[<p>{rv[0]}<br></p>]]></text>

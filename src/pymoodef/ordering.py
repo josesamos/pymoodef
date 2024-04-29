@@ -1,5 +1,4 @@
-
-def generate_ordering(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback, orientation):
+def _generate_ordering(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback, orientation):
     if orientation == 'h':
         orientation = 'HORIZONTAL'
     else:

@@ -1,7 +1,6 @@
-from pymoodef.common import string_to_vector
+from pymoodef.common import _string_to_vector
 
-
-def generate_numerical(answer, rest):
+def _generate_numerical(answer, rest):
     answer_1 = answer[0]
     if (len(answer) > 1):
         answer_2 = answer[1]
@@ -22,7 +21,7 @@ def generate_numerical(answer, rest):
 """
     others = ''
     for r in rest:
-        rv = string_to_vector(r)
+        rv = _string_to_vector(r)
         answer_1 = rv[0]
         if len(rv) > 1:
             answer_2 = rv[1]

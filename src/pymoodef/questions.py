@@ -6,16 +6,16 @@ from base64 import b64encode
 from pathlib import Path
 import tempfile, os
 from string import punctuation
-from pymoodef.common import string_to_vector, is_numeric_answer, has_gaps
-from pymoodef.numerical import generate_numerical
-from pymoodef.shortanswer import generate_shortanswer
-from pymoodef.multichoice import generate_multichoice
-from pymoodef.ordering import generate_ordering
-from pymoodef.ddwtos import generate_ddwtos
-from pymoodef.gapselect import generate_gapselect
-from pymoodef.matching import generate_matching
-from pymoodef.essay import generate_essay
-from pymoodef.truefalse import generate_truefalse
+from pymoodef.common import _string_to_vector, _is_numeric_answer, _has_gaps
+from pymoodef.numerical import _generate_numerical
+from pymoodef.shortanswer import _generate_shortanswer
+from pymoodef.multichoice import _generate_multichoice
+from pymoodef.ordering import _generate_ordering
+from pymoodef.ddwtos import _generate_ddwtos
+from pymoodef.gapselect import _generate_gapselect
+from pymoodef.matching import _generate_matching
+from pymoodef.essay import _generate_essay
+from pymoodef.truefalse import _generate_truefalse
 
 class Questions:
     """Defines a set of questions to be included in the Moodle question bank."""
@@ -229,18 +229,18 @@ class Questions:
     def __generate_question(self, row, index, columns):
         questiontext = self.__generate_question_text(row)
         rest = self.__get_rest_of_answers(row, columns)
-        answer = string_to_vector(row["answer"])
-        if is_numeric_answer(answer):
+        answer = _string_to_vector(row["answer"])
+        if _is_numeric_answer(answer):
             type = 'numerical'
             question_type = '<question type="numerical">'
-            question_body = generate_numerical(answer, rest)
+            question_body = _generate_numerical(answer, rest)
         elif len(rest) > 0:
             if len(answer) == 1:
-                if not has_gaps(row["question"]):
+                if not _has_gaps(row["question"]):
                     if isna(row["type"]):
                         type = 'multichoice'
                         question_type = '<question type="multichoice">'
-                        question_body = generate_multichoice(answer, rest, self.__correct_feedback, self.__incorrect_feedback)
+                        question_body = _generate_multichoice(answer, rest, self.__correct_feedback, self.__incorrect_feedback)
                     else:
                         if row["type"].lower() == 'h':
                             orientation = 'h'
@@ -248,34 +248,34 @@ class Questions:
                             orientation = 'v'
                         type = 'ordering'
                         question_type = '<question type="ordering">'
-                        question_body = generate_ordering(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback, orientation)
+                        question_body = _generate_ordering(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback, orientation)
                 else:
                     if isna(row["type"]):
                         type = 'ddwtos'
                         question_type = '<question type="ddwtos">'
-                        question_body = generate_ddwtos(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
+                        question_body = _generate_ddwtos(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
                     else:
                         type = 'gapselect'
                         question_type = '<question type="gapselect">'
-                        question_body = generate_gapselect(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
+                        question_body = _generate_gapselect(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
             else:
                 type = 'matching'
                 question_type = '<question type="matching">'
-                question_body = generate_matching(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
+                question_body = _generate_matching(answer, rest, self.__correct_feedback, self.__partially_correct_feedback, self.__incorrect_feedback)
         else:
             if len(answer) == 0:
                 type = 'essay'
                 question_type = '<question type="essay">'
-                question_body = generate_essay()
+                question_body = _generate_essay()
             else:
                 if answer[0].lower() in ['true', 'false']:
                     type = 'truefalse'
                     question_type = '<question type="truefalse">'
-                    question_body = generate_truefalse(answer)
+                    question_body = _generate_truefalse(answer)
                 else:
                     type = 'shortanswer'
                     question_type = '<question type="shortanswer">'
-                    question_body = generate_shortanswer(answer)
+                    question_body = _generate_shortanswer(answer)
 
         name = self.__generate_name(row, index, type)
         res = """

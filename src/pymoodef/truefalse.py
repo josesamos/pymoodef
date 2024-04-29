@@ -1,5 +1,4 @@
-
-def generate_truefalse(answer):
+def _generate_truefalse(answer):
     answer_1 = answer[0].lower()
     if answer_1 == 'true':
         answer_2 = 'false'

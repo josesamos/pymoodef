@@ -2,6 +2,9 @@ from pymoodef.pymoodef import moodef
 import sys
 
 def main():
+    """ python -m pymoodef tests/questions.xlsx 
+        python -m pymoodef tests/questions.xlsx result.xml
+    """
     if len(sys.argv) == 2:
         res = moodef(file = sys.argv[1])
     elif len(sys.argv) == 3:
