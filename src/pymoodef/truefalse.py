@@ -1,10 +1,10 @@
 def _generate_truefalse(answer):
+    """Generate the sections of the type of question indicated in the name of the function."""
     answer_1 = answer[0].lower()
     if answer_1 == 'true':
         answer_2 = 'false'
     else:
         answer_2 = 'true'
-
     res = f"""
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>1.0000000</penalty>

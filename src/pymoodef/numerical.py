@@ -1,6 +1,7 @@
 from pymoodef.common import _string_to_vector
 
 def _generate_numerical(answer, rest):
+    """Generate the sections of the type of question indicated in the name of the function."""
     answer_1 = answer[0]
     if (len(answer) > 1):
         answer_2 = answer[1]

@@ -1,4 +1,5 @@
 def _generate_multichoice(answer, rest, correct_feedback, incorrect_feedback):
+    """Generate the sections of the type of question indicated in the name of the function."""
     question = f"""
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.5</penalty>

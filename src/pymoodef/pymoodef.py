@@ -3,6 +3,33 @@ from pathlib import Path
 import os
 
 def moodef(file, ini = '', xml = ''):
+    """ Generate an xml file from the questions in csv or excel format. 
+    
+        We can indicate the name of the ini and output files.
+
+        Parameters
+        ----------
+        file : str
+            Path to csv or excel file.
+
+        ini : str
+            Path to ini file (optional).
+
+        xml : str
+            Path to output xml file (optional).
+
+        Returns
+        -------
+        str
+            Path to output xml file.
+        
+        Examples
+        --------
+        res = moodef(file = 'tests/questions.csv')
+        
+        res = moodef(file = 'tests/questions.csv', xml = 'result.xml')
+        
+    """
     q = Questions()
     filename, file_extension = os.path.splitext(file)
     if ini == '':
@@ -24,4 +51,3 @@ def moodef(file, ini = '', xml = ''):
     else:   
         q.generate_xml(xml)
         return(xml)
-

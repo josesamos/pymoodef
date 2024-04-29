@@ -2,7 +2,13 @@ from pymoodef.pymoodef import moodef
 import sys
 
 def main():
-    """ python -m pymoodef tests/questions.xlsx 
+    """ Generate an xml file from the questions in csv or excel format. 
+    
+        We can indicate the name of the output file.
+        
+        Examples
+        --------
+        python -m pymoodef tests/questions.xlsx 
         python -m pymoodef tests/questions.xlsx result.xml
     """
     if len(sys.argv) == 2:

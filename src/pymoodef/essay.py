@@ -1,4 +1,5 @@
 def _generate_essay():
+    """Generate the sections of the type of question indicated in the name of the function."""
     res = """
     <defaultgrade>1</defaultgrade>
     <penalty>0</penalty>

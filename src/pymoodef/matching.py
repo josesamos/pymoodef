@@ -1,7 +1,7 @@
 from pymoodef.common import _string_to_vector
 
 def _generate_matching(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback):
-    
+    """Generate the sections of the type of question indicated in the name of the function."""
     question = f"""
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>

@@ -1,4 +1,5 @@
 def _generate_ddwtos(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback):
+    """Generate the sections of the type of question indicated in the name of the function."""
     question = f"""
     <defaultgrade>1</defaultgrade>
     <penalty>0.3333333</penalty>

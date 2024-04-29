@@ -1,5 +1,6 @@
 def _generate_shortanswer(answer):
-  res = f"""
+    """Generate the sections of the type of question indicated in the name of the function."""
+    res = f"""
     <defaultgrade>1.0000000</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
@@ -12,4 +13,4 @@ def _generate_shortanswer(answer):
       </feedback>
     </answer>
 """
-  return(res)
+    return(res)

@@ -1,4 +1,5 @@
 def _generate_ordering(answer, rest, correct_feedback, partially_correct_feedback, incorrect_feedback, orientation):
+    """Generate the sections of the type of question indicated in the name of the function."""
     if orientation == 'h':
         orientation = 'HORIZONTAL'
     else:

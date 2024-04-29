@@ -52,7 +52,7 @@ class Questions:
         Examples
         --------
         >>> q = Questions()
-        >>> q.define_ini('tests/question.ini')
+        >>> q.define_ini('tests/questions.ini')
 
         """
         config = ConfigParser()
@@ -97,7 +97,7 @@ class Questions:
         Examples
         --------
         >>> q = Questions()
-        >>> q.define_from_csv('tests/questions0.csv')
+        >>> q.define_from_csv('tests/questions.csv')
 
         """
         self.__path =  "%s" % Path(file).parent
@@ -147,7 +147,7 @@ class Questions:
         Examples
         --------
         >>> q = Questions()
-        >>> q.define_from_csv('tests/questions0.csv')
+        >>> q.define_from_csv('tests/questions.csv')
         >>> q.generate_xml('questions.xml')
 
         """
@@ -164,6 +164,7 @@ class Questions:
 </quiz>""")
 
     def __format_questions(self):
+        """Format the questions included in the class."""
         columns = self.__questions.columns
         columns = columns.difference(['type', 'question', 'image', 'image_alt', 'answer']) 
         res = ''
@@ -173,6 +174,7 @@ class Questions:
 
 
     def __get_rest_of_answers(self, row, columns):
+        """Get the rest of the answers from a row of questions."""
         res = []
         for col in columns:
             if not isna(row[col]):
@@ -181,6 +183,7 @@ class Questions:
 
 
     def __generate_question_text(self, row):
+        """Generate the statement of a question, including the image if defined."""
         if isna(row['image']):
             img = ''
             fimg = ''
@@ -212,6 +215,7 @@ class Questions:
         return res
 
     def __generate_name(self, row, index, type):
+        """Generate the name of a question."""
         num = int(self.__first_question_number) + index
         question = row['question'][:40]
         for p in punctuation:
@@ -224,9 +228,9 @@ class Questions:
       <name> <text>{name}</text> </name>
 """
         return res
-      
 
     def __generate_question(self, row, index, columns):
+        """Determine the type of question and generate it."""
         questiontext = self.__generate_question_text(row)
         rest = self.__get_rest_of_answers(row, columns)
         answer = _string_to_vector(row["answer"])
