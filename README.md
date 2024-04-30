@@ -35,7 +35,7 @@ $ pip install pymoodef
 or *Excel* files:
 
 ``` bash
-$ python -m pymoodef data/questions.xlsx result.xml
+$ python -m pymoodef tests/questions.xlsx result.xml
 ```
 
 If the name of the result file is not indicated, one is created with the
@@ -43,15 +43,15 @@ same name as the input file but with an xml extension in the folder that
 contains it.
 
 ``` bash
-$ python -m pymoodef data/questions.csv 
+$ python -m pymoodef tests/questions.csv 
 ```
 
 By default, csv files with columns separated by “,” are considered. In
 case of using “;” as a separator, simply add a “2” after the file name,
-as shown below for file `data/questions1.csv`.
+as shown below for file `tests/questions1.csv`.
 
 ``` bash
-$ python -m pymoodef data/questions1.csv2
+$ python -m pymoodef tests/questions1.csv2
 ```
 
 Below is the content of one of the question files used.
@@ -76,7 +76,7 @@ The configuration can be defined using an ini file with the same name as
 the questions csv or *Excel* file located in the same folder. Finally,
 the ini configuration file is displayed.
 
-``` bash
+``` ini
 [DEFAULT]
 category = Initial test
 first_question_number = 1
