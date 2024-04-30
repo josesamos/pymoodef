@@ -40,7 +40,7 @@ def moodef(file, ini = '', xml = ''):
         q.define_ini(ini)
     if file_extension.lower() == '.csv':
         q.define_from_csv(file)
-    if file_extension.lower() == '.csv2':
+    elif file_extension.lower() == '.csv2':
         q.define_from_csv(file[:-1], sep = ';')
     elif file_extension.lower() == '.xlsx':
         q.define_from_excel(file)

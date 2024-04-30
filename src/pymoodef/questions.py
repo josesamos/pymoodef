@@ -1,4 +1,4 @@
-from pandas import read_csv, read_excel, isna
+from pandas import read_csv, read_excel, isna, DataFrame
 from warnings import catch_warnings, simplefilter
 from configparser import ConfigParser
 from PIL import Image
@@ -29,11 +29,11 @@ class Questions:
         self.__correct_feedback = 'Correct.'
         self.__partially_correct_feedback = 'Partially correct.'
         self.__incorrect_feedback = 'Incorrect.'
-        self.__adapt_images = 'FALSE'
+        self.__adapt_images = 'false'
         self.__width = '800'
         self.__height = '600'
         self.__questions = None
-        self.__path = None
+        self.__path = ''
 
     def define_ini(self, file):
         """Define configuration values.
@@ -72,7 +72,7 @@ class Questions:
         if 'incorrect_feedback' in config['DEFAULT']:
             self.__incorrect_feedback = config['DEFAULT']['incorrect_feedback']
         if 'adapt_images' in config['DEFAULT']:
-            self.__adapt_images = config['DEFAULT']['adapt_images']
+            self.__adapt_images = config['DEFAULT']['adapt_images'].lower()
         if 'width' in config['DEFAULT']:
             self.__width = config['DEFAULT']['width']
         if 'height' in config['DEFAULT']:
@@ -130,7 +130,7 @@ class Questions:
             simplefilter("ignore") 
             self.__questions = read_excel(file, sheet_index)
 
-    def generate_xml(self, file):
+    def generate_xml(self, file = None):
         """Generate quiz in XML file.
     
         Each question is in a row. Each concept in a column.
@@ -152,8 +152,7 @@ class Questions:
 
         """
         questions = self.__format_questions()
-        with open(file, "w") as text_file:
-            text_file.write(f"""<?xml version="1.0" encoding="UTF-8"?>
+        content = f"""<?xml version="1.0" encoding="UTF-8"?>
 <quiz>
   <question type="category">
     <category> <text>$course$/top/{self.__category}</text> </category>
@@ -161,13 +160,19 @@ class Questions:
     <idnumber></idnumber>
   </question>
   {questions}
-</quiz>""")
+</quiz>"""
+        if not isna(file):
+            with open(file, "w") as text_file:
+                text_file.write(content)
+        return(content)
 
     def __format_questions(self):
         """Format the questions included in the class."""
+        res = ''
+        if not isinstance(self.__questions, DataFrame):
+            return res
         columns = self.__questions.columns
         columns = columns.difference(['type', 'question', 'image', 'image_alt', 'answer']) 
-        res = ''
         for index, row in self.__questions.iterrows():
             res = res + self.__generate_question(row, index, columns)
         return res
@@ -192,7 +197,7 @@ class Questions:
             filename, file_extension = os.path.splitext(file)
             image_alt = row['image_alt']
             image = Image.open(self.__path + '/' + row['image'])
-            if self.__adapt_images:
+            if self.__adapt_images == 'true':
                 image.thumbnail((int(self.__width), int(self.__height)))
             width, height = image.size
             fd, path = tempfile.mkstemp(suffix=file_extension)
