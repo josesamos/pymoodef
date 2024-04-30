@@ -31,6 +31,8 @@ def _is_numeric_answer(answer):
 
 def _has_gaps(str):
     """Check if it has gaps."""
+    if isna(str) or str == "":
+        return(False)
     return(str.find('[[1]]') != -1 and str.find('[[2]]') != -1)
 
 
